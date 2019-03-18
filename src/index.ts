@@ -29,9 +29,6 @@ const reception = new Reception(
   APP_KEY,
   {
     concurrency: 2,
-    // 如果要使用其他节点，暂时需要手动指定，该参数会在今后移除。
-    // 需要先 import { Region } from "@leancloud/play";
-    // region: Region.NorthChina,
   },
 );
 

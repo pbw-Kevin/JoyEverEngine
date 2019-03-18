@@ -1,5 +1,5 @@
 import { autoDestroy, AutomaticGameEvent, Game, listen, watchRoomFull } from "@leancloud/client-engine";
-import { Event, Play, Room } from "@leancloud/play";
+import { Client, Event, Room } from "@leancloud/play";
 import d = require("debug");
 import _ = require("lodash");
 import { tap } from "rxjs/operators";
@@ -17,7 +17,7 @@ const wins = [1, 2, 0];
  export default class RPSGame extends Game {
   public static defaultSeatCount = 2;
 
-  constructor(room: Room, masterClient: Play) {
+  constructor(room: Room, masterClient: Client) {
     super(room, masterClient);
     // 游戏创建后立刻执行的逻辑
     this.once(AutomaticGameEvent.ROOM_FULL, this.start);
