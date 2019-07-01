@@ -8,7 +8,7 @@
     "lint": "tslint src/*",
     "lint:fix": "tslint src/* --fix",
     "build": "tsc --build tsconfig.json",
-    "start": "node -r source-map-support/register build/index.js",
+    "start": "node -r source-map-support/register --max-old-space-size=4096 build/index.js",
     "dev": "npm run build && npm run start",
     "postinstall": "npm run build"
   },
