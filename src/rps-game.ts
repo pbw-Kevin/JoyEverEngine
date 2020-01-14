@@ -1,5 +1,5 @@
 import { autoDestroy, AutomaticGameEvent, Game, listen, watchRoomFull } from "@leancloud/client-engine";
-import { Client, Event, Room } from "@leancloud/play";
+import { Client, Event as PlayEvent, Room } from "@leancloud/play";
 import d = require("debug");
 import _ = require("lodash");
 import { tap } from "rxjs/operators";
@@ -9,7 +9,7 @@ const debug = d("RPS");
 // [✊, ✌️, ✋] wins [✌️, ✋, ✊]
 const wins = [1, 2, 0];
 
-enum GameEvent {
+enum Event {
   Start = 10,
   Play = 11,
   Over = 20,
@@ -40,16 +40,16 @@ enum GameEvent {
     // 标记房间不再可加入
     this.masterClient.setRoomOpen(false);
     // 向客户端广播游戏开始事件
-    this.broadcast(GameEvent.Start);
+    this.broadcast(Event.Start);
     // 等待所有玩家都已做出选择的时刻
     const playPromise = Promise.all(this.players.map((player) =>
-        this.takeFirst(GameEvent.Play, player)
+        this.takeFirst(Event.Play, player)
           // 向其他玩家转发出牌动作，但是隐藏具体的 choice
           .pipe(tap(_.bind(this.forwardToTheRests, this, _, () => ({}))))
           .toPromise(),
       ));
     // 监听 player 离开游戏事件
-    const playerLeftPromise = listen(this.masterClient, Event.PLAYER_ROOM_LEFT);
+    const playerLeftPromise = listen(this.masterClient, PlayEvent.PLAYER_ROOM_LEFT);
     // 取上面两个事件先发生的那个作为结果
     const result = await Promise.race([playPromise, playerLeftPromise]);
     debug(result);
@@ -65,7 +65,7 @@ enum GameEvent {
     }
     // 游戏结束
     // 向客户端广播游戏结果
-    this.broadcast(GameEvent.Over, {
+    this.broadcast(Event.Over, {
       choices,
       winnerId: winner ? winner.userId : null,
     });
