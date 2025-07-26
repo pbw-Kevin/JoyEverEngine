@@ -1,5 +1,9 @@
-Client Engine Node.js Getting Started
-----
-LeanCloud Client Engine 服务端示例项目（Node.js)
+# JoyEverEngine
 
-[文档](https://github.com/leancloud/client-engine-nodejs-getting-started/wiki)
+The game engine of Online JoyEver.  
+Imported from [leancloud/client-engine-nodejs-getting-started](https://github.com/leancloud/client-engine-nodejs-getting-started)
+
+## Related Repositories
+
+- App (front-end): [pbw-Kevin/JoyEver](https://github.com/pbw-Kevin/JoyEver)
+- Game-pack: [pbw-Kevin/JoyEverGameLogic](https://github.com/pbw-Kevin/JoyEverGameLogic)
